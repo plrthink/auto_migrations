@@ -118,14 +118,14 @@ module AutoMigrations
 
           # Special catch for precision/scale, since *both* must be specified together
           # Always include them in the attr struct, but they'll only get applied if changed = true
-          new_attr[:precision] = fields_in_schema[field][:precision]
-          new_attr[:scale]     = fields_in_schema[field][:scale]
+          new_attr[:precision] = fields_in_schema[field].precision
+          new_attr[:scale]     = fields_in_schema[field].scale
 
           # Next, iterate through our extended attributes, looking for any differences
           # This catches stuff like :null, :precision, etc
-          fields_in_schema[field].each_pair do |att,value|
-            next if att == :type or att == :base or att == :name # special cases
+          fields_in_schema[field][:options].each_pair do |att,value|
 
+            next unless att == :primary_key && value
             if !value.nil?
               value_in_db = fields_in_db[field].send(att)
               value_in_db = value_in_db.to_i if att == :default && new_type == :integer && value_in_db.class == String
