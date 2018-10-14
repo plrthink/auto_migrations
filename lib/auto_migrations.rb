@@ -124,8 +124,9 @@ module AutoMigrations
           # Next, iterate through our extended attributes, looking for any differences
           # This catches stuff like :null, :precision, etc
           fields_in_schema[field][:options].each_pair do |att,value|
-
             next unless att == :primary_key && value
+            next if att == :base
+
             if !value.nil?
               value_in_db = fields_in_db[field].send(att)
               value_in_db = value_in_db.to_i if att == :default && new_type == :integer && value_in_db.class == String
