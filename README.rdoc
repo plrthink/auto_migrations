@@ -16,7 +16,7 @@ Write out your schema (or use an existing one)
       t.text     :body
       t.timestamps
     end
-  
+
   end
 
   $ rake db:auto:migrate
@@ -34,7 +34,7 @@ Write out your schema (or use an existing one)
       t.text     :content
       t.timestamps
     end
-  
+
   end
 
   $ rake db:auto:migrate
